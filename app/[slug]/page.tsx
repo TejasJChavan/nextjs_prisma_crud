@@ -5,11 +5,13 @@ import React from "react";
 export default async function PagePost({
     params,
 }: {
-    params: { slug: string };
+    params: Promise<{ slug: string }>;
 }) {
+    const { slug } = await params; // Await the params to resolve the slug
+
     const post = await prisma.post.findUnique({
         where: {
-            slug: params.slug,
+            slug: slug,
         },
     });
 
