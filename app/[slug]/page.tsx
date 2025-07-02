@@ -1,6 +1,5 @@
 import { deletePost } from "@/actions/actions";
 import { prisma } from "@/lib/db";
-import Link from "next/link";
 import React from "react";
 
 interface PageProps {
@@ -9,14 +8,14 @@ interface PageProps {
     };
 }
 
-const PagePost = async ({ params }:PageProps) => {
+const PagePost = async ({ params }: PageProps) => {
     const post = await prisma.post.findUnique({
         where: {
             slug: params.slug,
         },
     });
 
-    if(!post) return <div>Post Not Found</div>
+    if (!post) return <div>Post Not Found</div>;
 
     return (
         <>
@@ -26,8 +25,13 @@ const PagePost = async ({ params }:PageProps) => {
                     {post.content}
                 </div>
                 <form action={deletePost}>
-                <input type="hidden" name="id" value={post.id} />
-                <button type="submit" className="p-3 bg-gray-300   rounded-3xl mt-10">Delete</button>
+                    <input type="hidden" name="id" value={post.id} />
+                    <button
+                        type="submit"
+                        className="p-3 bg-gray-300   rounded-3xl mt-10"
+                    >
+                        Delete
+                    </button>
                 </form>
             </div>
         </>
