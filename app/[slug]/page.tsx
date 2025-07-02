@@ -2,13 +2,11 @@ import { deletePost } from "@/actions/actions";
 import { prisma } from "@/lib/db";
 import React from "react";
 
-interface PageProps {
-    params: {
-        slug: string;
-    };
-}
-
-const PagePost = async ({ params }: PageProps) => {
+export default async function PagePost({
+    params,
+}: {
+    params: { slug: string };
+}) {
     const post = await prisma.post.findUnique({
         where: {
             slug: params.slug,
@@ -18,24 +16,20 @@ const PagePost = async ({ params }: PageProps) => {
     if (!post) return <div>Post Not Found</div>;
 
     return (
-        <>
-            <div className="flex flex-col h-screen pt-24 place-items-center">
-                <div className="p-10">{post.title}</div>
-                <div className="border-y border-black/10 py-10 w-1/2 flex justify-center">
-                    {post.content}
-                </div>
-                <form action={deletePost}>
-                    <input type="hidden" name="id" value={post.id} />
-                    <button
-                        type="submit"
-                        className="p-3 bg-gray-300   rounded-3xl mt-10"
-                    >
-                        Delete
-                    </button>
-                </form>
+        <div className="flex flex-col h-screen pt-24 place-items-center">
+            <div className="p-10">{post.title}</div>
+            <div className="border-y border-black/10 py-10 w-1/2 flex justify-center">
+                {post.content}
             </div>
-        </>
+            <form action={deletePost}>
+                <input type="hidden" name="id" value={post.id} />
+                <button
+                    type="submit"
+                    className="p-3 bg-gray-300 rounded-3xl mt-10"
+                >
+                    Delete
+                </button>
+            </form>
+        </div>
     );
-};
-
-export default PagePost;
+}
