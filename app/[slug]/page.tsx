@@ -3,11 +3,11 @@ import { prisma } from "@/lib/db";
 import Link from "next/link";
 import React from "react";
 
-export default async function PagePost({
-    params,
-}: {
+interface PageProps {
     params: { slug: string };
-}) {
+}
+
+export default async function PagePost({ params }: PageProps) {
     const { slug } = params;
 
     const post = await prisma.post.findUnique({
