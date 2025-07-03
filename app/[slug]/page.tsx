@@ -3,11 +3,6 @@ import { prisma } from "@/lib/db";
 import Link from "next/link";
 import React from "react";
 
-// Define the type for your params, now as a Promise
-interface PageProps {
-    params: { slug: string };
-}
-
 export default async function PagePost(params:any) {
     const { slug } = params;
 
