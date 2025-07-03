@@ -1,7 +1,6 @@
-import { deletePost } from "@/actions/actions";
 import { prisma } from "@/lib/db";
 import Link from "next/link";
-import React from "react";
+import { deletePost } from "@/actions/actions";
 
 type PageProps = {
   params: {
@@ -9,12 +8,10 @@ type PageProps = {
   };
 };
 
-export default async function PagePost({ params }: PageProps) {
-  const { slug } = params;
-
+export default async function Page({ params }: PageProps) {
   const post = await prisma.post.findUnique({
     where: {
-      slug: slug,
+      slug: params.slug,
     },
   });
 
@@ -29,10 +26,7 @@ export default async function PagePost({ params }: PageProps) {
       <div className="flex p-5 justify-center items-center gap-10">
         <form action={deletePost}>
           <input type="hidden" name="id" value={post.id} />
-          <button
-            type="submit"
-            className="p-3 bg-red-300 rounded-3xl"
-          >
+          <button type="submit" className="p-3 bg-red-300 rounded-3xl">
             Delete
           </button>
         </form>
