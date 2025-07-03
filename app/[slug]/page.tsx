@@ -3,12 +3,20 @@ import { prisma } from "@/lib/db";
 import Link from "next/link";
 import React from "react";
 
-interface PageProps {
-    params: { slug: string };
-}
+export default async function PagePost({
+    params,
+}: {
+    params: Promise<{ slug: string }> | { slug: string }; // Allow both Promise and plain object
+}) {
+    // Resolve params if it's a Promise
+    const resolvedParams = await (async () => {
+        if ("then" in params) {
+            return await params; // Await if params is a Promise
+        }
+        return params; // Use directly if params is already an object
+    })();
 
-export default async function PagePost({ params }: PageProps) {
-    const { slug } = params;
+    const { slug } = resolvedParams;
 
     const post = await prisma.post.findUnique({
         where: {
