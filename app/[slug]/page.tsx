@@ -6,9 +6,9 @@ import React from "react";
 export default async function PagePost({
     params,
 }: {
-    params: Promise<{ slug: string }>; // Expect params to be a Promise
+    params: { slug: string };
 }) {
-    const { slug } = await params; // Await the Promise to get the slug
+    const { slug } = params;
 
     const post = await prisma.post.findUnique({
         where: {
