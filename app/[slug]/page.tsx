@@ -8,9 +8,7 @@ interface PageProps {
     params: { slug: string };
 }
 
-export default async function PagePost({
-    params,
-}: PageProps) {
+export default async function PagePost(params:any) {
     const { slug } = params;
 
     const post = await prisma.post.findUnique({
