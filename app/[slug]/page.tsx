@@ -6,17 +6,9 @@ import React from "react";
 export default async function PagePost({
     params,
 }: {
-    params: Promise<{ slug: string }> | { slug: string }; // Allow both Promise and plain object
+    params: Promise<{ slug: string }>; // Expect params to be a Promise
 }) {
-    // Resolve params if it's a Promise
-    const resolvedParams = await (async () => {
-        if ("then" in params) {
-            return await params; // Await if params is a Promise
-        }
-        return params; // Use directly if params is already an object
-    })();
-
-    const { slug } = resolvedParams;
+    const { slug } = await params; // Await the Promise to get the slug
 
     const post = await prisma.post.findUnique({
         where: {
