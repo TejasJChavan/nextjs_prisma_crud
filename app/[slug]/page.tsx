@@ -6,9 +6,9 @@ import React from "react";
 export default async function PagePost({
     params,
 }: {
-    params: Promise<{ slug: string }>;
+    params: { slug: string };
 }) {
-    const { slug } = await params; // Await the params to resolve the slug
+    const { slug } = params;
 
     const post = await prisma.post.findUnique({
         where: {
@@ -34,7 +34,10 @@ export default async function PagePost({
                         Delete
                     </button>
                 </form>
-                <Link href={`/${post.slug}/update`} className="p-3 bg-blue-200 rounded-3xl">
+                <Link
+                    href={`/${post.slug}/update`}
+                    className="p-3 bg-blue-200 rounded-3xl"
+                >
                     Update
                 </Link>
             </div>
