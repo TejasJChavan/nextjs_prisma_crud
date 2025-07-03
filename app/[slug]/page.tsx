@@ -3,12 +3,17 @@ import { prisma } from "@/lib/db";
 import Link from "next/link";
 import React from "react";
 
+// Define the type for your params, now as a Promise
+interface PageProps {
+    params: Promise<{ slug: string }>;
+}
+
 export default async function PagePost({
     params,
-}: {
-    params: { slug: string };
-}) {
-    const { slug } = params;
+}: PageProps) {
+    // Await the params to get the actual slug object
+    const awaitedParams = await params;
+    const { slug } = awaitedParams;
 
     const post = await prisma.post.findUnique({
         where: {
